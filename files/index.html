@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Email template editor</title>
+  <link rel="stylesheet" href="email-editor.css">
+  <style>html,body{height:100%;margin:0}</style>
+</head>
+<body>
+  <!-- The editor fills whatever container you give it; the container needs a height. -->
+  <div id="editor" style="height:100%"></div>
+
+  <script src="email-editor.js"></script>
+  <script>
+    const editor = new EmailEditor('#editor', {
+      // design: JSON.parse(savedDesignFromYourDb),
+
+      onChange(design) {
+        // Autosave hook, e.g.:
+        // fetch('/api/templates/123', { method: 'PUT', headers: {'Content-Type':'application/json'},
+        //   body: JSON.stringify({ design, html: editor.getHTML() }) });
+      },
+
+      // Optional: upload images to your server/CDN instead of embedding them as base64.
+      // onImageUpload: async (file) => {
+      //   const fd = new FormData(); fd.append('file', file);
+      //   const res = await fetch('/api/uploads', { method: 'POST', body: fd });
+      //   return (await res.json()).url;   // must be a public https URL
+      // }
+    });
+
+    // Starter content so the canvas isn't empty
+    editor.load({ blocks: [
+      { type: 'text', props: { html: '<h1>Autumn sale starts Monday</h1><p>Twenty percent off everything in the store, for one week only.</p>' } },
+      { type: 'image', props: {} },
+      { type: 'html', props: {} }
+    ]});
+  </script>
+</body>
+</html>
